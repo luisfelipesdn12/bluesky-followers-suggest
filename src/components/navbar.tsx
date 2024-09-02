@@ -7,7 +7,6 @@ import { LogOut, UserRound } from "lucide-react";
 import Link, { LinkProps } from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import React, { useMemo, useState } from "react";
-import { SessionProviderPageProps } from "./SessionProvider";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { Button } from "./ui/button";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "./ui/dropdown-menu";
@@ -26,12 +25,10 @@ interface Link {
  * Get the user session to show or hide navigation options,
  * and also to show profile information using gravatar.
  */
-export default function Navbar({ session, gravatar }: SessionProviderPageProps) {
+export default function Navbar() {
     const pathname = usePathname();
     const router = useRouter();
     const [open, setOpen] = useState(false);
-
-    const supabase = createClientComponentClient<Database>();
 
     const links = useMemo<Link[]>(() => {
         const links: Link[] = [
@@ -47,20 +44,8 @@ export default function Navbar({ session, gravatar }: SessionProviderPageProps) 
             },
         ];
 
-        if (session) {
-            links.unshift({
-                label: "App",
-                pathname: "/app",
-            });
-        }
-
         return links;
-    }, [session]);
-
-    const handleSignOut = async () => {
-        await supabase.auth.signOut();
-        router.refresh();
-    };
+    }, []);
 
     return (
         <header className="sticky top-0 py-1 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -68,7 +53,7 @@ export default function Navbar({ session, gravatar }: SessionProviderPageProps) 
                 <div className="mr-4 hidden md:flex">
                     <Link href="/" className="mr-6 flex items-center space-x-2">
                         <span className="font-bold sm:inline-block">
-                            Vacation Planner
+                            Bluesky Follow Suggestion
                         </span>
                     </Link>
                     <nav className="flex items-center gap-6 text-sm">
@@ -154,42 +139,10 @@ export default function Navbar({ session, gravatar }: SessionProviderPageProps) 
                         <ModeToggle />
                     </nav>
                     <div className="w-full flex-1 md:w-auto md:flex-none">
-                        {session ? (
-                            <DropdownMenu>
-                                <DropdownMenuTrigger asChild>
-                                    <Avatar className="cursor-pointer">
-                                        <AvatarImage src={gravatar?.thumbnailUrl} />
-                                        <AvatarFallback>
-                                            <UserRound />
-                                        </AvatarFallback>
-                                    </Avatar>
-                                </DropdownMenuTrigger>
-                                <DropdownMenuContent className="w-56 mr-10 mt-1">
-                                    <DropdownMenuLabel className="pb-0">
-                                        Logged as {gravatar?.displayName}
-                                    </DropdownMenuLabel>
-                                    <DropdownMenuLabel className="pt-1 text-xs font-normal text-muted-foreground">
-                                        {session.user.email}
-                                    </DropdownMenuLabel>
-                                    <DropdownMenuSeparator />
-                                    <Link href="https://gravatar.com/connect" target="_blank">
-                                        <DropdownMenuItem>
-                                            <UserRound className="mr-2 h-4 w-4" />
-                                            <span>My Profile</span>
-                                        </DropdownMenuItem>
-                                    </Link>
-                                    <DropdownMenuItem onClick={handleSignOut}>
-                                        <LogOut className="mr-2 h-4 w-4" />
-                                        <span>Log out</span>
-                                    </DropdownMenuItem>
-                                </DropdownMenuContent>
-                            </DropdownMenu>
-                        ) : (
-                            <>
-                                <Button className="mr-2" onClick={() => router.push("/register")} variant={"outline"}>Register</Button>
-                                <Button onClick={() => router.push("/login")}>Login</Button>
-                            </>
-                        )}
+                        <>
+                            <Button className="mr-2" onClick={() => router.push("/register")} variant={"outline"}>Register</Button>
+                            <Button onClick={() => router.push("/login")}>Login</Button>
+                        </>
                     </div>
                 </div>
             </div>

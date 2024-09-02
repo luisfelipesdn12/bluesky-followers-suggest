@@ -1,21 +1,22 @@
-import { SessionProviderPageProps } from "@/components/SessionProvider";
+
 import Navbar from "@/components/navbar";
 import Pilot from "@/icons/Pilot";
+import Image from "next/image";
 
 /**
  * The home page of the app.
  */
-export default function Home(props: SessionProviderPageProps) {
+export default function Home() {
     return (
         <>
-            <Navbar {...props} />
+            <Navbar />
             <main className="flex flex-col py-20 items-center justify-center gap-4 text-center">
-                <Pilot className="max-w-full" />
+                <Image src="/icon.png" width={200} height={200} alt="Bluesky Logo" style={{ borderRadius: "2.5rem" }} />
                 <h1 className="text-5xl font-bold">
-                    Vacation Planner
+                    Bluesky Follow Suggestion
                 </h1>
                 <p className="text-muted-foreground">
-                    The perfect planner for your deserved vacation. Set trips, manage dates and more!
+                    Score-based followser suggestion for bluesky!
                 </p>
             </main>
         </>
