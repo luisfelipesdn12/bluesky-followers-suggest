@@ -12,7 +12,7 @@ export const metadata: Metadata = {
     icons: [{
         url: "/favicon.png",
     }],
-    description: "Score-based followser suggestion for bluesky!",
+    description: "Score-based follower suggestion for bluesky!",
     authors: [{
         name: "Luis Felipe",
         url: "https://luisf.dev"
@@ -21,7 +21,7 @@ export const metadata: Metadata = {
         type: "website",
         url: "https://trip.luisf.dev/",
         title: "Bluesky Follow Suggestion",
-        description: "Score-based followser suggestion for bluesky!",
+        description: "Score-based follower suggestion for bluesky!",
         images: [{ url: "/website-card.png" }],
     },
     twitter: {

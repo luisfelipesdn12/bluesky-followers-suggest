@@ -96,7 +96,7 @@ export default function Home() {
                     Bluesky Follow Suggestion
                 </h1>
                 <p className="text-muted-foreground">
-                    Score-based followser suggestion for bluesky!
+                    Score-based follower suggestion for bluesky!
                 </p>
 
                 <SearchSelect value={actor} setValue={setActor} />
