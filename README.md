@@ -4,6 +4,10 @@ Score-based followser suggestion for bluesky! Available now at [bskysuggest.luis
 
 ![Website Card](./public/website-card.png)
 
+## 📼 Demo
+
+https://github.com/user-attachments/assets/5f941408-a4e9-4990-8b39-9d5978653b5d
+
 ## 🧮 Features
 
 - 🔍 Search for handles in Bluesky
