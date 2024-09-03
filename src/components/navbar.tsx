@@ -1,6 +1,5 @@
 "use client";
 
-import { Database } from "@/lib/database.types";
 import { cn } from "@/lib/utils";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { LogOut, UserRound } from "lucide-react";
@@ -39,7 +38,7 @@ export default function Navbar() {
             },
             {
                 label: "Github",
-                pathname: "https://github.com/luisfelipesdn12/buzzvel-vacation-plan",
+                pathname: "https://github.com/luisfelipesdn12/bluesky-followers-suggest",
                 target: "_blank",
             },
         ];
@@ -138,12 +137,6 @@ export default function Navbar() {
                     <nav className="flex items-center">
                         <ModeToggle />
                     </nav>
-                    <div className="w-full flex-1 md:w-auto md:flex-none">
-                        <>
-                            <Button className="mr-2" onClick={() => router.push("/register")} variant={"outline"}>Register</Button>
-                            <Button onClick={() => router.push("/login")}>Login</Button>
-                        </>
-                    </div>
                 </div>
             </div>
         </header>

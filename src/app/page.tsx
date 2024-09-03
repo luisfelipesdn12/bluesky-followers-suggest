@@ -1,8 +1,6 @@
 "use client";
 
 import Navbar from "@/components/navbar";
-import { Input } from "@/components/ui/input";
-import Pilot from "@/icons/Pilot";
 import Image from "next/image";
 
 import { AppBskyGraphGetFollowers, AtpAgent } from "@atproto/api";
