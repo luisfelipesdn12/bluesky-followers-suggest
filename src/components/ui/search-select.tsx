@@ -4,9 +4,10 @@ import { CheckIcon, LoaderCircleIcon } from "lucide-react";
 import { useCallback, useEffect, useState } from "react";
 import { Input } from "./input";
 import { ScrollArea } from "./scroll-area";
-import { getAtpAgent } from "@/lib/utils";
+import { api, getAtpAgent } from "@/lib/utils";
 import { ProfileView } from "@atproto/api/dist/client/types/app/bsky/actor/defs";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import axios from "axios";
 
 const SearchSelect: React.FC<{
     value: ProfileView | undefined;
@@ -19,10 +20,8 @@ const SearchSelect: React.FC<{
 
     const searchActor = useCallback(async () => {
         if (!search) return;
-        const agent = await getAtpAgent();
-        await agent.searchActors({
-            q: search,
-        }).then(res => setOptions(res.data.actors));
+        await api.get(`/app.bsky.actor.searchActors?q=${encodeURIComponent(search)}`)
+            .then(res => setOptions(res.data.actors));
     }, [search]);
 
     useEffect(() => {
@@ -95,7 +94,7 @@ const SearchSelect: React.FC<{
                             >
                                 <Avatar>
                                     <AvatarImage src={actor.avatar} />
-                                    <AvatarFallback>CN</AvatarFallback>
+                                    <AvatarFallback>{actor.displayName}</AvatarFallback>
                                 </Avatar>
                                 <div>
                                     <p className="text-lg font-medium">

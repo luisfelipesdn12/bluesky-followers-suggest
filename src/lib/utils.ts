@@ -2,15 +2,16 @@ import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
 
 import AtpAgent from "@atproto/api";
+import axios from "axios";
 
 export const getAtpAgent = async () => {
     const agent = new AtpAgent({
         service: "https://bsky.social"
     });
-    await agent.login({
-        identifier: process.env.NEXT_PUBLIC_ATP_AGENT_ID as string,
-        password: process.env.NEXT_PUBLIC_ATP_AGENT_PASSWORD as string,
-    });
+    // await agent.login({
+    //     identifier: process.env.NEXT_PUBLIC_ATP_AGENT_ID as string,
+    //     password: process.env.NEXT_PUBLIC_ATP_AGENT_PASSWORD as string,
+    // });
     return agent;
 };
 
@@ -27,3 +28,7 @@ export const getAtpAgent = async () => {
 export function cn(...inputs: ClassValue[]) {
     return twMerge(clsx(inputs));
 }
+
+export const api = axios.create({
+    baseURL: "https://public.api.bsky.app/xrpc"
+});
