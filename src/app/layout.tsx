@@ -8,8 +8,11 @@ import "./globals.css";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-    title: "Vacation Planner",
-    description: "The perfect planner for your deserved vacation. Set trips, manage dates and more!",
+    title: "Bluesky Follow Suggestion",
+    icons: [{
+        url: "/favicon.png",
+    }],
+    description: "Score-based followser suggestion for bluesky!",
     authors: [{
         name: "Luis Felipe",
         url: "https://luisf.dev"
@@ -17,8 +20,8 @@ export const metadata: Metadata = {
     openGraph: {
         type: "website",
         url: "https://trip.luisf.dev/",
-        title: "Vacation Planner",
-        description: "The perfect planner for your deserved vacation. Set trips, manage dates and more!",
+        title: "Bluesky Follow Suggestion",
+        description: "Score-based followser suggestion for bluesky!",
         images: [{ url: "/website-card.png" }],
     },
     twitter: {
