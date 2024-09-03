@@ -16,6 +16,15 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
  * The home page of the app.
  */
 export default function Home() {
+    const [loading, setLoading] = useState<{
+        loading: boolean;
+        follows: [number, number];
+        subFollows: [number, number];
+    }>({
+        loading: false,
+        follows: [0, 0],
+        subFollows: [0, 0],
+    });
     const [actor, setActor] = useState<ProfileView>();
     const [suggestions, setSuggestions] = useState<Record<string, {
         data: ProfileView;
@@ -24,6 +33,11 @@ export default function Home() {
 
     const searchSuggestions = useCallback(async () => {
         if (!actor) return;
+        setLoading(prev => ({
+            loading: true,
+            follows: [0, 0],
+            subFollows: [0, 0]
+        }));
 
         const follows: ProfileView[] = await api
             .get(`/app.bsky.graph.getFollows?actor=${actor.handle}`)
@@ -34,14 +48,19 @@ export default function Home() {
             count: number;
         }> = {};
 
+        let followIndex = 0;
+
         for (const follow of follows) {
-            console.log({ follow });
+            followIndex++;
+            setLoading(prev => ({ ...prev, follows: [followIndex, follows.length] }));
             const subFollows: ProfileView[] = await api
                 .get(`/app.bsky.graph.getFollows?actor=${follow.handle}`)
                 .then(res => (res.data?.follows as ProfileView[]));
 
+            let subFollowIndex = 0;
             for (const subFollow of subFollows) {
-                console.log({ subFollow });
+                subFollowIndex++;
+                setLoading(prev => ({ ...prev, subFollows: [subFollowIndex, subFollows.length] }));
                 if (follows.some(f => f.handle === subFollow.handle)) continue;
                 if (subFollow.handle === actor.handle) continue;
 
@@ -53,12 +72,8 @@ export default function Home() {
                         count: 1,
                     };
                 }
-
-                console.log({ suggestions });
             }
         }
-
-        console.log(suggestions);
 
         const sortedSuggestions: Record<string, {
             data: ProfileView;
@@ -68,8 +83,8 @@ export default function Home() {
         Object.keys(suggestions).sort((a, b) => suggestions[a].count > suggestions[b].count ? -1 : 1)
             .forEach(handle => sortedSuggestions[handle] = suggestions[handle]);
 
-        console.log(sortedSuggestions);
         setSuggestions(sortedSuggestions);
+        setLoading(prev => ({ ...prev, loading: false }));
     }, [actor]);
 
     return (
@@ -91,7 +106,12 @@ export default function Home() {
                 </Button>
 
                 <div className="w-full p-4 flex flex-col gap-4">
-                    {Object.keys(suggestions)?.map((handle, key) => (
+                    {loading .loading ? (
+                        <>
+                            <p className="text-xl font-medium">Processing...</p>
+                            <p>{loading.follows[0]} of {loading.follows[1]} follow and {loading.subFollows[0]} of {loading.subFollows[1]} sub-follows</p>
+                        </>
+                    ) : Object.keys(suggestions)?.map((handle, key) => (
                         <div
                             key={key}
                             className={"relative flex w-full cursor-default select-none items-center rounded-sm py-2 px-4 text-sm gap-4 outline-none hover:bg-accent hover:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50 text-left border"}
