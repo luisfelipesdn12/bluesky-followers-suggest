@@ -1,6 +1,6 @@
 # Bluesky Follow Suggestion
 
-Score-based followser suggestion for bluesky! Available now at [https://bskysuggest.luisf.dev](https://https://bskysuggest.luisf.dev/)
+Score-based followser suggestion for bluesky! Available now at [bskysuggest.luisf.dev](https://bskysuggest.luisf.dev/)
 
 ![Website Card](./public/website-card.png)
 
